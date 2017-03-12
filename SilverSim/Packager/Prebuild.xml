@@ -20,6 +20,8 @@
   </Configuration>
   <ReferencePath>../../bin</ReferencePath>
   <Reference name="System"/>
+  <Reference name="System.IO.Compression"/>
+  <Reference name="System.Xml"/>
   <Reference name="SilverSim.Updater" localCopy="false"/>
   <Files>
     <Match pattern="*.cs" recurse="true">
