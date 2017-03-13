@@ -23,7 +23,7 @@ namespace SilverSim.Packager
             {
                 m_Dependencies.Add(kvp.Key, kvp.Value);
             }
-            foreach(KeyValuePair<string, FileInfo> kvp in Files)
+            foreach(KeyValuePair<string, PackageDescription.FileInfo> kvp in Files)
             {
                 m_Files.Add(kvp.Key, kvp.Value);
             }
@@ -70,6 +70,6 @@ namespace SilverSim.Packager
         }
 
         public new Dictionary<string, string> Dependencies { get { return m_Dependencies; } }
-        public new Dictionary<string, FileInfo> Files { get { return m_Files; } }
+        public new Dictionary<string, PackageDescription.FileInfo> Files { get { return m_Files; } }
     }
 }
