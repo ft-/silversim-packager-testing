@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Xml;
@@ -185,6 +186,28 @@ namespace SilverSim.Packager
                 finalPacks.Add(desc.Name, builder);
             }
 
+            Console.WriteLine("Collecting file version ...");
+            foreach(PackageDescriptionBuilder desc in finalPacks.Values)
+            {
+                foreach(string filename in new List<string>(desc.Files.Keys))
+                {
+                    if(filename.EndsWith(".dll"))
+                    {
+                        PackageDescription.FileInfo fi = desc.Files[filename];
+                        try
+                        {
+                            fi.Version = Assembly.LoadFile(Path.GetFullPath(filename)).GetName().Version.ToString();
+                            desc.Files[filename] = fi;
+                            Console.WriteLine("Appended version {0} to {1}", fi.Version, filename);
+                        }
+                        catch(Exception e)
+                        {
+                            /* ignore */
+                        }
+                    }
+                }
+            }
+
             if (File.Exists("versioninject.xml"))
             {
                 Console.WriteLine("Loading versioninject.xml ...");
@@ -253,6 +276,23 @@ namespace SilverSim.Packager
 
                                                         case "version":
                                                             version = reader.Value;
+                                                            break;
+
+                                                        case "version-src":
+                                                            Assembly assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine("bin", reader.Value)));
+                                                            version = assembly.GetName().Version.ToString();
+                                                            break;
+
+                                                        case "version-from-package-files":
+                                                            PackageDescription actpack = packages[package];
+                                                            foreach(PackageDescription.FileInfo fi in actpack.Files.Values)
+                                                            {
+                                                                if (!string.IsNullOrEmpty(fi.Version))
+                                                                {
+                                                                    version = fi.Version;
+                                                                    break;
+                                                                }
+                                                            }
                                                             break;
 
                                                         case "exactmatch":
