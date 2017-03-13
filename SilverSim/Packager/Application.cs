@@ -175,14 +175,6 @@ namespace SilverSim.Packager
                     builder.Files[file] = fi;
                 }
 
-                if(string.IsNullOrEmpty(builder.Version))
-                {
-                    builder.Version = "0.0.0.0";
-                }
-                if(string.IsNullOrEmpty(builder.InterfaceVersion))
-                {
-                    builder.InterfaceVersion = "0.0.0.0";
-                }
                 finalPacks.Add(desc.Name, builder);
             }
 
@@ -279,8 +271,7 @@ namespace SilverSim.Packager
                                                             break;
 
                                                         case "version-src":
-                                                            Assembly assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine("bin", reader.Value)));
-                                                            version = assembly.GetName().Version.ToString();
+                                                            version = Assembly.LoadFile(Path.GetFullPath(reader.Value)).GetName().Version.ToString();
                                                             break;
 
                                                         case "version-from-package-files":
@@ -322,6 +313,7 @@ namespace SilverSim.Packager
                         }
                     }
                 }
+
                 Console.WriteLine("Checking completeness ...");
                 bool versionmissing = false;
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
@@ -352,6 +344,19 @@ namespace SilverSim.Packager
                             desc.Dependencies[kvp.Key] = versions[desc.Name];
                         }
                     }
+                }
+            }
+
+            Console.WriteLine("Checking versions ...");
+            foreach (PackageDescriptionBuilder desc in finalPacks.Values)
+            {
+                if (string.IsNullOrEmpty(desc.Version))
+                {
+                    desc.Version = "0.0.0.0";
+                }
+                if (string.IsNullOrEmpty(desc.InterfaceVersion))
+                {
+                    desc.InterfaceVersion = "0.0.0.0";
                 }
             }
 
