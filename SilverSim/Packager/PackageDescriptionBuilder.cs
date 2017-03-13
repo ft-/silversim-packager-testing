@@ -19,7 +19,6 @@ namespace SilverSim.Packager
             InterfaceVersion = desc.InterfaceVersion;
             Name = desc.Name;
             Hash = desc.Hash;
-            IsCheckedForUpdates = desc.IsCheckedForUpdates;
             foreach(KeyValuePair<string, string> kvp in Dependencies)
             {
                 m_Dependencies.Add(kvp.Key, kvp.Value);
@@ -67,18 +66,6 @@ namespace SilverSim.Packager
             set
             {
                 base.Hash = value;
-            }
-        }
-
-        public new bool IsCheckedForUpdates
-        {
-            get
-            {
-                return base.IsCheckedForUpdates;
-            }
-            set
-            {
-                base.IsCheckedForUpdates = value;
             }
         }
 

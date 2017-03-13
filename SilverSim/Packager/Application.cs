@@ -16,6 +16,18 @@ namespace SilverSim.Packager
 {
     static class Application
     {
+        static bool IsFrameworkAssembly(string refAssembly)
+        {
+            return refAssembly.StartsWith("System.") ||
+                refAssembly == "mscorlib" ||
+                refAssembly == "System" ||
+                refAssembly == "PresentationFramework" ||
+                refAssembly == "PresentationCore" ||
+                refAssembly == "WindowsBase" ||
+                refAssembly == "Microsoft.CSharp" ||
+                refAssembly.StartsWith("PresentationFramework.");
+        }
+
         static List<string> GetFileList()
         {
             List<string> files = new List<string>();
@@ -115,6 +127,9 @@ namespace SilverSim.Packager
                 return;
             }
 
+            Dictionary<string, string> assemblytopackage = new Dictionary<string, string>();
+            Dictionary<string, List<string>> assembliesreferenced = new Dictionary<string, List<string>>();
+
             Directory.SetCurrentDirectory(CoreUpdater.Instance.InstallRootPath);
 
             Console.WriteLine("Collecting file list ...");
@@ -140,6 +155,28 @@ namespace SilverSim.Packager
                     else
                     {
                         availablefiles.Remove(kvp.Key);
+                        if(kvp.Key.EndsWith(".dll") || kvp.Key.EndsWith(".exe"))
+                        {
+                            Assembly a;
+                            try
+                            {
+                                a = Assembly.LoadFile(Path.GetFullPath(kvp.Key));
+                            }
+                            catch
+                            {
+                                a = null;
+                            }
+                            if(a != null)
+                            {
+                                assemblytopackage[a.GetName().Name] = desc.Name;
+                                List<string> refs = new List<string>();
+                                assembliesreferenced[a.GetName().Name] = refs;
+                                foreach(AssemblyName aName in a.GetReferencedAssemblies())
+                                {
+                                    refs.Add(aName.Name);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -178,12 +215,39 @@ namespace SilverSim.Packager
                 finalPacks.Add(desc.Name, builder);
             }
 
+            Console.WriteLine("Checking dependencies ...");
+            foreach(KeyValuePair<string, string> kvp in assemblytopackage)
+            {
+                PackageDescriptionBuilder desc = finalPacks[kvp.Value];
+                foreach(string refAssembly in assembliesreferenced[kvp.Key])
+                {
+                    if(IsFrameworkAssembly(refAssembly))
+                    {
+                        /* skip System. namespace */
+                        continue;
+                    }
+                    string pkgname;
+                    if(!assemblytopackage.TryGetValue(refAssembly, out pkgname) ||
+                        !finalPacks.ContainsKey(pkgname))
+                    {
+                        Console.WriteLine("Package {0} requires reference to {1} which is not packaged.", kvp.Value, refAssembly);
+                        Environment.Exit(1);
+                        return;
+                    }
+
+                    if(!desc.Dependencies.ContainsKey(pkgname))
+                    {
+                        desc.Dependencies.Add(pkgname, string.Empty);
+                    }
+                }
+            }
+
             Console.WriteLine("Collecting file version ...");
             foreach(PackageDescriptionBuilder desc in finalPacks.Values)
             {
                 foreach(string filename in new List<string>(desc.Files.Keys))
                 {
-                    if(filename.EndsWith(".dll"))
+                    if(filename.EndsWith(".dll") || filename.EndsWith(".exe"))
                     {
                         PackageDescription.FileInfo fi = desc.Files[filename];
                         try
@@ -192,7 +256,7 @@ namespace SilverSim.Packager
                             desc.Files[filename] = fi;
                             Console.WriteLine("Appended version {0} to {1}", fi.Version, filename);
                         }
-                        catch(Exception e)
+                        catch
                         {
                             /* ignore */
                         }
@@ -271,7 +335,16 @@ namespace SilverSim.Packager
                                                             break;
 
                                                         case "version-src":
-                                                            version = Assembly.LoadFile(Path.GetFullPath(reader.Value)).GetName().Version.ToString();
+                                                            try
+                                                            {
+                                                                version = Assembly.LoadFile(Path.GetFullPath(reader.Value)).GetName().Version.ToString();
+                                                            }
+                                                            catch
+                                                            {
+                                                                Console.WriteLine("Failed to load assembly {0}", reader.Value);
+                                                                Environment.Exit(1);
+                                                                return;
+                                                            }
                                                             break;
 
                                                         case "version-from-package-files":
@@ -360,6 +433,11 @@ namespace SilverSim.Packager
                 }
             }
 
+            Console.WriteLine("Final package versions ...");
+            foreach(PackageDescriptionBuilder desc in finalPacks.Values)
+            {
+                Console.WriteLine("Package {0} => {1}", desc.Name, desc.Version);
+            }
 
             Console.WriteLine("Building packaged structure ...");
             foreach(PackageDescriptionBuilder desc in finalPacks.Values)
