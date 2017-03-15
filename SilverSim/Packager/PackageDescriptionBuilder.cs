@@ -19,7 +19,7 @@ namespace SilverSim.Packager
             InterfaceVersion = desc.InterfaceVersion;
             Name = desc.Name;
             Hash = desc.Hash;
-            foreach(KeyValuePair<string, string> kvp in Dependencies)
+            foreach(KeyValuePair<string, string> kvp in desc.Dependencies)
             {
                 m_Dependencies.Add(kvp.Key, kvp.Value);
             }
