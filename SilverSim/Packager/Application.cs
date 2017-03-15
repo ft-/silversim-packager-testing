@@ -414,7 +414,7 @@ namespace SilverSim.Packager
                     {
                         if(matchversions.Contains(kvp.Key))
                         {
-                            desc.Dependencies[kvp.Key] = versions[desc.Name];
+                            desc.Dependencies[kvp.Key] = versions[kvp.Key];
                         }
                     }
                 }
