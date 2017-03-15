@@ -235,7 +235,7 @@ namespace SilverSim.Packager
                         return;
                     }
 
-                    if(!desc.Dependencies.ContainsKey(pkgname))
+                    if(!desc.Dependencies.ContainsKey(pkgname) && pkgname != desc.Name)
                     {
                         desc.Dependencies.Add(pkgname, string.Empty);
                     }
