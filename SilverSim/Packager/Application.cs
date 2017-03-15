@@ -445,6 +445,10 @@ namespace SilverSim.Packager
                 Console.WriteLine("Packing {0} into zip", desc.Name);
                 string zipPath = PackageZipPath(desc);
                 Directory.CreateDirectory(Path.Combine(zipPath, ".."));
+                if(File.Exists(zipPath))
+                {
+                    File.Delete(zipPath);
+                }
                 using (FileStream zipStream = new FileStream(zipPath, FileMode.Create))
                 {
                     using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create))
