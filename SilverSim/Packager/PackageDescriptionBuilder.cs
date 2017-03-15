@@ -23,11 +23,11 @@ namespace SilverSim.Packager
             {
                 m_Dependencies.Add(kvp.Key, kvp.Value);
             }
-            foreach(KeyValuePair<string, PackageDescription.FileInfo> kvp in Files)
+            foreach(KeyValuePair<string, PackageDescription.FileInfo> kvp in desc.Files)
             {
                 m_Files.Add(kvp.Key, kvp.Value);
             }
-            foreach(Configuration cfg in DefaultConfigurations)
+            foreach(Configuration cfg in desc.DefaultConfigurations)
             {                
                 m_DefaultConfigurations.Add(cfg);
             }
