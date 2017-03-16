@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Xml;
 
@@ -264,12 +265,14 @@ namespace SilverSim.Packager
                 }
             }
 
+            string interfaceVersion = "0.0.0.0";
+
             if (File.Exists("versioninject.xml"))
             {
                 Console.WriteLine("Loading versioninject.xml ...");
                 Dictionary<string, string> versions = new Dictionary<string, string>();
                 List<string> matchversions = new List<string>();
-                string interfaceVersion = string.Empty;
+                
                 using (FileStream x = new FileStream("versioninject.xml", FileMode.Open, FileAccess.Read))
                 {
                     using (XmlTextReader reader = new XmlTextReader(x))
@@ -429,7 +432,7 @@ namespace SilverSim.Packager
                 }
                 if (string.IsNullOrEmpty(desc.InterfaceVersion))
                 {
-                    desc.InterfaceVersion = "0.0.0.0";
+                    desc.InterfaceVersion = interfaceVersion;
                 }
             }
 
@@ -483,6 +486,54 @@ namespace SilverSim.Packager
             {
                 desc.WriteFile(PackageUpdateFeedPath(desc));
                 desc.WriteFile(PackageSpecificVersionFeedPath(desc));
+            }
+
+            List<string> hidepackages = new List<string>();
+            if(File.Exists("hidepackagelist.xml"))
+            {
+                using (FileStream fs = new FileStream("hidepackagelist.xml", FileMode.Open, FileAccess.Read))
+                {
+                    using (XmlTextReader reader = new XmlTextReader(fs))
+                    {
+                        while(reader.Read())
+                        {
+                            if(reader.NodeType == XmlNodeType.Element && reader.Name == "package")
+                            {
+                                if (reader.MoveToFirstAttribute())
+                                {
+                                    string version = string.Empty;
+                                    do
+                                    {
+                                        switch (reader.Name)
+                                        {
+                                            case "name":
+                                                hidepackages.Add(reader.Value);
+                                                break;
+                                        }
+                                    } while (reader.MoveToNextAttribute());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("Updating package feed list ...");
+            using (XmlTextWriter writer = new XmlTextWriter("feed/" + interfaceVersion + "/packages.list", new UTF8Encoding(false)))
+            {
+                writer.WriteStartElement("packages");
+                foreach (string file in Directory.GetFiles("feed/" + interfaceVersion, "*.spkg", SearchOption.TopDirectoryOnly))
+                {
+                    string pkgname = Path.GetFileNameWithoutExtension(file);
+                    writer.WriteStartElement("package");
+                    writer.WriteAttributeString("name", pkgname);
+                    if(hidepackages.Contains(pkgname))
+                    {
+                        writer.WriteAttributeString("hidden", "true");
+                    }
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
             }
         }
 
