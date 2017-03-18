@@ -436,7 +436,7 @@ namespace SilverSim.Packager
                 bool versionmissing = false;
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    if(!versions.ContainsKey(desc.Name))
+                    if(!versions.ContainsKey(desc.Name) && string.IsNullOrEmpty(desc.Version))
                     {
                         Console.WriteLine("Package {0} not in versioninject.xml", desc.Name);
                         versionmissing = true;
