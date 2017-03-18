@@ -495,7 +495,6 @@ namespace SilverSim.Packager
                             {
                                 if (reader.MoveToFirstAttribute())
                                 {
-                                    string version = string.Empty;
                                     do
                                     {
                                         switch (reader.Name)
@@ -581,7 +580,6 @@ namespace SilverSim.Packager
                             {
                                 if (reader.MoveToFirstAttribute())
                                 {
-                                    string version = string.Empty;
                                     do
                                     {
                                         switch (reader.Name)
