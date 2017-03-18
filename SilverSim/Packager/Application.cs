@@ -446,6 +446,10 @@ namespace SilverSim.Packager
                 {
                     desc.Version = versions[desc.Name];
                     desc.InterfaceVersion = interfaceVersion;
+                    if(licenses.ContainsKey(desc.Name))
+                    {
+                        desc.License = licenses[desc.Name];
+                    }
 
                     foreach(KeyValuePair<string, string> kvp in new Dictionary<string, string>(desc.Dependencies))
                     {
