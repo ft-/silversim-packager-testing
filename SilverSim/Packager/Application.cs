@@ -452,7 +452,10 @@ namespace SilverSim.Packager
                 Console.WriteLine("Injecting versions ...");
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    desc.Version = versions[desc.Name];
+                    if (string.IsNullOrEmpty(desc.Version))
+                    {
+                        desc.Version = versions[desc.Name];
+                    }
                     desc.InterfaceVersion = interfaceVersion;
                     if(licenses.ContainsKey(desc.Name))
                     {
