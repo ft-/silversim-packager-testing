@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -123,11 +124,12 @@ namespace SilverSim.Packager
 
             Console.WriteLine("Verifying dependencies ...");
             bool depcheckfailed = false;
+            bool partialpackagelist = args.Contains("--partial-package-list");
             foreach (PackageDescription desc in packages.Values)
             {
                 foreach(KeyValuePair<string, string> dep in desc.Dependencies)
                 {
-                    if(!packages.ContainsKey(dep.Key))
+                    if(!packages.ContainsKey(dep.Key) && !partialpackagelist)
                     {
                         Console.WriteLine("Package {0} has unknown dependency {1}", desc.Name, dep.Key);
                         depcheckfailed = true;
