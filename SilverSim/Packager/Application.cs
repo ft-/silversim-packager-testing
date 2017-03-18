@@ -527,8 +527,12 @@ namespace SilverSim.Packager
 
                 Console.WriteLine("Packing {0} into zip", desc.Name);
                 string zipPath = PackageZipPath(desc);
-                Directory.CreateDirectory(Path.Combine(zipPath, ".."));
-                if(File.Exists(zipPath))
+                string zipFolderPath = Path.GetFullPath(Path.Combine(zipPath, ".."));
+                if(!Directory.Exists(zipFolderPath))
+                {
+                    Directory.CreateDirectory(zipFolderPath);
+                }
+                if (File.Exists(zipPath))
                 {
                     File.Delete(zipPath);
                 }
