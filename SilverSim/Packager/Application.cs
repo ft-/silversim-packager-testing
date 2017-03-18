@@ -290,6 +290,7 @@ namespace SilverSim.Packager
                 Console.WriteLine("Loading versioninject.xml ...");
                 Dictionary<string, string> versions = new Dictionary<string, string>();
                 List<string> matchversions = new List<string>();
+                Dictionary<string, string> licenses = new Dictionary<string, string>();
                 
                 using (FileStream x = new FileStream("versioninject.xml", FileMode.Open, FileAccess.Read))
                 {
@@ -342,6 +343,7 @@ namespace SilverSim.Packager
                                             {
                                                 string package = string.Empty;
                                                 string version = string.Empty;
+                                                string license = string.Empty;
                                                 bool exactmatch = false;
                                                 do
                                                 {
@@ -355,10 +357,20 @@ namespace SilverSim.Packager
                                                             version = reader.Value;
                                                             break;
 
+                                                        case "license":
+                                                            license = reader.Value;
+                                                            break;
+
                                                         case "version-src":
                                                             try
                                                             {
-                                                                version = Assembly.LoadFile(Path.GetFullPath(reader.Value)).GetName().Version.ToString();
+                                                                Assembly a = Assembly.LoadFile(Path.GetFullPath(reader.Value));
+                                                                version = a.GetName().Version.ToString();
+                                                                AssemblyCopyrightAttribute copyrightAttr = a.GetCustomAttribute(typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
+                                                                if(null != copyrightAttr)
+                                                                {
+                                                                    license = copyrightAttr.Copyright;
+                                                                }
                                                             }
                                                             catch
                                                             {
@@ -392,6 +404,10 @@ namespace SilverSim.Packager
                                                     {
                                                         matchversions.Add(package);
                                                     }
+                                                }
+                                                if(!string.IsNullOrEmpty(package) && !string.IsNullOrEmpty(license))
+                                                {
+                                                    licenses[package] = license;
                                                 }
                                             }
                                             break;

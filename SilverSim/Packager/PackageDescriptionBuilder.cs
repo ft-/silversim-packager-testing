@@ -75,6 +75,19 @@ namespace SilverSim.Packager
             }
         }
 
+        public new string License
+        {
+            get
+            {
+                return base.License;
+            }
+
+            set
+            {
+                base.License = value;
+            }
+        }
+
         public new byte[] Hash
         {
             get
