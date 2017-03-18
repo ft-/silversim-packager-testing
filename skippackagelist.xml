@@ -1,0 +1,3 @@
+<skip-packages>
+    <package name="SilverSim.Updater.Cfg"/>
+</skip-packages>

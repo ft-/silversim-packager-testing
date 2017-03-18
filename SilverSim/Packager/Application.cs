@@ -480,9 +480,44 @@ namespace SilverSim.Packager
                 Console.WriteLine("Package {0} => {1}", desc.Name, desc.Version);
             }
 
+            List<string> skippackages = new List<string>();
+            if (File.Exists("skippackagelist.xml"))
+            {
+                using (FileStream fs = new FileStream("skippackagelist.xml", FileMode.Open, FileAccess.Read))
+                {
+                    using (XmlTextReader reader = new XmlTextReader(fs))
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Element && reader.Name == "package")
+                            {
+                                if (reader.MoveToFirstAttribute())
+                                {
+                                    string version = string.Empty;
+                                    do
+                                    {
+                                        switch (reader.Name)
+                                        {
+                                            case "name":
+                                                skippackages.Add(reader.Value);
+                                                break;
+                                        }
+                                    } while (reader.MoveToNextAttribute());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             Console.WriteLine("Building packaged structure ...");
             foreach(PackageDescriptionBuilder desc in finalPacks.Values)
             {
+                if(skippackages.Contains(desc.Name))
+                {
+                    continue;
+                }
+
                 Console.WriteLine("Packing {0} into zip", desc.Name);
                 string zipPath = PackageZipPath(desc);
                 Directory.CreateDirectory(Path.Combine(zipPath, ".."));
@@ -522,6 +557,11 @@ namespace SilverSim.Packager
             Console.WriteLine("Write package feed ...");
             foreach(PackageDescription desc in finalPacks.Values)
             {
+                if (skippackages.Contains(desc.Name))
+                {
+                    continue;
+                }
+
                 desc.WriteFile(PackageUpdateFeedPath(desc));
                 desc.WriteFile(PackageSpecificVersionFeedPath(desc));
             }
