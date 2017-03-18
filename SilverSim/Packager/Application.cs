@@ -202,10 +202,13 @@ namespace SilverSim.Packager
                 }
             }
 
-            foreach(string file in availablefiles)
+            if (!partialpackagelist)
             {
-                filecheckfailed = true;
-                Console.WriteLine("Found unreferenced file {0}", file);
+                foreach (string file in availablefiles)
+                {
+                    filecheckfailed = true;
+                    Console.WriteLine("Found unreferenced file {0}", file);
+                }
             }
 
             if(filecheckfailed)
