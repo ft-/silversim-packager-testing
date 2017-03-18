@@ -616,7 +616,8 @@ namespace SilverSim.Packager
             }
 
             Console.WriteLine("Updating package feed list ...");
-            using (XmlTextWriter writer = new XmlTextWriter("feed/" + interfaceVersion + "/packages.list", new UTF8Encoding(false)))
+            string feedList = "feed/" + interfaceVersion + "/packages.list";
+            using (XmlTextWriter writer = new XmlTextWriter(feedList + ".tmp", new UTF8Encoding(false)))
             {
                 writer.WriteStartElement("packages");
                 foreach (string file in Directory.GetFiles("feed/" + interfaceVersion, "*.spkg", SearchOption.TopDirectoryOnly))
@@ -632,6 +633,8 @@ namespace SilverSim.Packager
                 }
                 writer.WriteEndElement();
             }
+            File.Delete(feedList);
+            File.Move(feedList + ".tmp", feedList);
         }
 
         static string PackageUpdateFeedPath(PackageDescription desc)
