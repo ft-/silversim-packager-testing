@@ -254,9 +254,12 @@ namespace SilverSim.Packager
                     if(!assemblytopackage.TryGetValue(refAssembly, out pkgname) ||
                         !finalPacks.ContainsKey(pkgname))
                     {
-                        Console.WriteLine("Package {0} requires reference to {1} which is not packaged.", kvp.Value, refAssembly);
-                        Environment.Exit(1);
-                        return;
+                        if (!partialpackagelist)
+                        {
+                            Console.WriteLine("Package {0} requires reference to {1} which is not packaged.", kvp.Value, refAssembly);
+                            Environment.Exit(1);
+                            return;
+                        }
                     }
 
                     if(!desc.Dependencies.ContainsKey(pkgname) && pkgname != desc.Name)
