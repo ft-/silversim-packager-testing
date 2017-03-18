@@ -379,9 +379,12 @@ namespace SilverSim.Packager
                                                             }
                                                             catch
                                                             {
-                                                                Console.WriteLine("Failed to load assembly {0}", reader.Value);
-                                                                Environment.Exit(1);
-                                                                return;
+                                                                if (!partialpackagelist)
+                                                                {
+                                                                    Console.WriteLine("Failed to load assembly {0}", reader.Value);
+                                                                    Environment.Exit(1);
+                                                                    return;
+                                                                }
                                                             }
                                                             break;
 
