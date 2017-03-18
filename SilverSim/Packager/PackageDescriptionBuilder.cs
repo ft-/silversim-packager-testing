@@ -32,23 +32,8 @@ namespace SilverSim.Packager
         }
 
         public PackageDescriptionBuilder(PackageDescription desc)
+            : base(desc)
         {
-            Version = desc.Version;
-            InterfaceVersion = desc.InterfaceVersion;
-            Name = desc.Name;
-            Hash = desc.Hash;
-            foreach(KeyValuePair<string, string> kvp in desc.Dependencies)
-            {
-                m_Dependencies.Add(kvp.Key, kvp.Value);
-            }
-            foreach(KeyValuePair<string, PackageDescription.FileInfo> kvp in desc.Files)
-            {
-                m_Files.Add(kvp.Key, kvp.Value);
-            }
-            foreach(Configuration cfg in desc.DefaultConfigurations)
-            {                
-                m_DefaultConfigurations.Add(cfg);
-            }
         }
 
         public new string InterfaceVersion
