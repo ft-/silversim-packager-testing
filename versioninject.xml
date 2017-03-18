@@ -3,6 +3,8 @@
     <package name="SilverSim.Meta.Core.Viewer" version="meta" license="Affero GPLv3 License+Link Exception"/>
     <package name="SilverSim.Meta.Core.Grid" version="meta" license="Affero GPLv3 License+Link Exception"/>
     <package name="SilverSim.Meta.Core.Simulator" version="meta" license="Affero GPLv3 License+Link Exception"/>
+    <package name="SilverSim.Meta.Robust.Grid" version="meta" license="Affero GPLv3 License+Link Exception"/>
+    <package name="SilverSim.Meta.Robust.Simulator" version="meta" license="Affero GPLv3 License+Link Exception"/>
     <package name="SilverSim.Updater.Cfg" version="0.0.0.0" license="Affero GPLv3 License+Link Exception"/>
     <package name="VHACD" version="2.0.0.0" license="BSD license"/>
     <package name="SilverSim.WebAdmin" version="0.0.0.0" license="Affero GPLv3 License+Link Exception"/>
