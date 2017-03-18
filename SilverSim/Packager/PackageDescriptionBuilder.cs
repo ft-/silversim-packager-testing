@@ -36,6 +36,18 @@ namespace SilverSim.Packager
         {
         }
 
+        public new string Description
+        {
+            get
+            {
+                return base.Description;
+            }
+            set
+            {
+                base.Description = value;
+            }
+        }
+
         public new string InterfaceVersion
         {
             get
