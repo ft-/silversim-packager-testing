@@ -536,7 +536,7 @@ namespace SilverSim.Packager
                 {
                     File.Delete(zipPath);
                 }
-                using (FileStream zipStream = new FileStream(zipPath, FileMode.Create))
+                using (FileStream zipStream = new FileStream(zipPath + ".tmp", FileMode.Create))
                 {
                     using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create))
                     {
@@ -553,6 +553,9 @@ namespace SilverSim.Packager
                         }
                     }
                 }
+
+                File.Delete(zipPath);
+                File.Move(zipPath + ".tmp", zipPath);
 
                 Console.WriteLine("Hasing zip of {0}", desc.Name);
                 using (FileStream zipStream = new FileStream(zipPath, FileMode.Open))
@@ -573,8 +576,14 @@ namespace SilverSim.Packager
                     continue;
                 }
 
-                desc.WriteFile(PackageUpdateFeedPath(desc));
-                desc.WriteFile(PackageSpecificVersionFeedPath(desc));
+                string targetname = PackageUpdateFeedPath(desc);
+                desc.WriteFile(targetname + ".tmp");
+                File.Delete(targetname);
+                File.Move(targetname + ".tmp", targetname);
+                targetname = PackageSpecificVersionFeedPath(desc);
+                desc.WriteFile(targetname + ".tmp");
+                File.Delete(targetname);
+                File.Move(targetname + ".tmp", targetname);
             }
 
             List<string> hidepackages = new List<string>();
