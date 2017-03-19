@@ -164,6 +164,11 @@ namespace SilverSim.Packager
             {
                 foreach(KeyValuePair<string, PackageDescription.FileInfo> kvp in desc.Files)
                 {
+                    if(File.Exists(kvp.Key) && !existingfiles.Contains(kvp.Key))
+                    {
+                        existingfiles.Add(kvp.Key);
+                        availablefiles.Add(kvp.Key);
+                    }
                     if(!existingfiles.Contains(kvp.Key))
                     {
                         filecheckfailed = true;
