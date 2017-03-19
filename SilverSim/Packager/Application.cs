@@ -70,7 +70,8 @@ namespace SilverSim.Packager
                     file.EndsWith(".p12") ||
                     file.EndsWith(".spkg") ||
                     file.StartsWith(".") ||
-                    file.Contains("/."))
+                    file.Contains("/.") ||
+                    file.EndsWith(".build"))
                 {
                     continue;
                 }
