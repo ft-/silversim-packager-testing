@@ -19,6 +19,8 @@
     <package name="IronRuby" version-src="bin/IronRuby.dll"/>
     <package name="IronPython" version-src="bin/IronPython.dll"/>
     <package name="M2Mqtt.Net" version-src="bin/M2Mqtt.Net.dll"/>
+    <package name="SharpNav" version-src="bin/SharpNav.dll"/>
+    <package name="SilverSim.SharpNav" version-src="bin/plugins/SilverSim.SharpNav.dll"/>
     <package name="Microsoft.Scripting" version-src="bin/Microsoft.Scripting.dll"/>
     <package name="Paloma.TargaImage" version-src="bin/Paloma.TargaImage.dll"/>
     <package name="SilverSim.Backend.Common" version-src="bin/plugins/SilverSim.Backend.Common.dll"/>
@@ -38,6 +40,8 @@
     <package name="SilverSim.Grid" version-src="bin/plugins/SilverSim.Grid.dll"/>
     <package name="SilverSim.Groups.Common" version-src="bin/plugins/SilverSim.Groups.Common.dll"/>
     <package name="SilverSim.Http" version-src="bin/SilverSim.Http.dll"/>
+    <package name="SilverSim.Irc" version-src="bin/SilverSim.Irc.dll"/>
+    <package name="SilverSim.Scripting.Lsl.Api.IrcClient" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.IrcClient.dll"/>
     <package name="SilverSim.LoadStore.Terrain" version-src="bin/plugins/SilverSim.LoadStore.Terrain.dll"/>
     <package name="SilverSim.Main.Cmd.Estate" version-src="bin/plugins/SilverSim.Main.Cmd.Estate.dll"/>
     <package name="SilverSim.Main.Cmd.MapServer" version-src="bin/plugins/SilverSim.Main.Cmd.MapServer.dll"/>
@@ -80,6 +84,7 @@
     <package name="SilverSim.Scripting.Lsl.Api.XmlRpc" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.XmlRpc.dll"/>
     <package name="SilverSim.Scripting.Lsl" version-src="bin/plugins/SilverSim.Scripting.Lsl.dll"/>
     <package name="SilverSim.Scripting.VisualBasic" version-src="bin/plugins/SilverSim.Scripting.VisualBasic.dll"/>
+    <package name="SilverSim.Scripting.CodeDom" version-src="bin/plugins/SilverSim.Scripting.CodeDom.dll"/>
     <package name="SilverSim.SelfSignCert" version-src="bin/SilverSim.SelfSignCert.dll"/>
     <package name="SilverSim.ServiceInterfaces" version-src="bin/SilverSim.ServiceInterfaces.dll"/>
     <package name="SilverSim.SFSWind" version-src="bin/plugins/SilverSim.SFSWind.dll"/>
