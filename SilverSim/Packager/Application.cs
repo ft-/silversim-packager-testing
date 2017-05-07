@@ -208,6 +208,29 @@ namespace SilverSim.Packager
                 }
             }
 
+            Console.WriteLine("Validating preload-assemblies being used ...");
+            foreach (PackageDescription desc in packages.Values)
+            {
+                foreach (PackageDescription.PreloadAssembly preloadData in desc.PreloadAssemblies)
+                {
+                    bool notfound = true;
+                    string actualfname = "bin/" + preloadData.Filename;
+                    foreach (KeyValuePair<string, PackageDescription.FileInfo> kvp in desc.Files)
+                    {
+                        if(kvp.Key == actualfname)
+                        {
+                            notfound = false;
+                        }
+                    }
+
+                    if (notfound)
+                    {
+                        filecheckfailed = true;
+                        Console.WriteLine("Package {0} references preload-assembly {1} not being in file-list", desc.Name, actualfname);
+                    }
+                }
+            }
+
             if (!partialpackagelist)
             {
                 foreach (string file in availablefiles)
