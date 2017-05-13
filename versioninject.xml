@@ -107,4 +107,5 @@
     <package name="SilverSim.Viewer.Teleport" version-src="bin/plugins/SilverSim.Viewer.Teleport.dll"/>
     <package name="SilverSim.Viewer.TerrainEdit" version-src="bin/plugins/SilverSim.Viewer.TerrainEdit.dll"/>
     <package name="SilverSim.WebIF" version-src="bin/plugins/SilverSim.WebIF.dll"/>
+    <package name="SilverSim.Tests.Viewer" version-src="bin/plugins/SilverSim.Tests.Viewer.dll"/>
 </versioninject>
