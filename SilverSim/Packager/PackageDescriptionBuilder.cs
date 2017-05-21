@@ -38,66 +38,39 @@ namespace SilverSim.Packager
 
         public new string Description
         {
-            get
-            {
-                return base.Description;
-            }
-            set
-            {
-                base.Description = value;
-            }
+            get { return base.Description; }
+            set { base.Description = value; }
         }
 
         public new string InterfaceVersion
         {
-            get
-            {
-                return base.InterfaceVersion;
-            }
-            set
-            {
-                base.InterfaceVersion = value;
-            }
+            get { return base.InterfaceVersion; }
+
+            set { base.InterfaceVersion = value; }
         }
 
         public new string Version
         {
-            get
-            {
-                return base.Version;
-            }
-            set
-            {
-                base.Version = value;
-            }
+            get { return base.Version; }
+
+            set { base.Version = value; }
         }
 
         public new string License
         {
-            get
-            {
-                return base.License;
-            }
+            get { return base.License; }
 
-            set
-            {
-                base.License = value;
-            }
+            set { base.License = value; }
         }
 
         public new byte[] Hash
         {
-            get
-            {
-                return base.Hash;
-            }
-            set
-            {
-                base.Hash = value;
-            }
+            get { return base.Hash; }
+
+            set { base.Hash = value; }
         }
 
-        public new Dictionary<string, string> Dependencies { get { return m_Dependencies; } }
-        public new Dictionary<string, PackageDescription.FileInfo> Files { get { return m_Files; } }
+        public new Dictionary<string, string> Dependencies => m_Dependencies;
+        public new Dictionary<string, FileInfo> Files => m_Files;
     }
 }

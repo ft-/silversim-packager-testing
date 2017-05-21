@@ -34,11 +34,10 @@ using System.Xml;
 
 namespace SilverSim.Packager
 {
-    static class Application
+    internal static class Application
     {
-        static bool IsFrameworkAssembly(string refAssembly)
-        {
-            return refAssembly.StartsWith("System.") ||
+        private static bool IsFrameworkAssembly(string refAssembly) =>
+            refAssembly.StartsWith("System.") ||
                 refAssembly == "mscorlib" ||
                 refAssembly == "System" ||
                 refAssembly == "PresentationFramework" ||
@@ -46,20 +45,19 @@ namespace SilverSim.Packager
                 refAssembly == "WindowsBase" ||
                 refAssembly == "Microsoft.CSharp" ||
                 refAssembly.StartsWith("PresentationFramework.");
-        }
 
-        static List<string> GetFileList()
+        private static List<string> GetFileList()
         {
-            List<string> files = new List<string>();
+            var files = new List<string>();
             files.AddRange(Directory.GetFiles("data", "*", SearchOption.AllDirectories));
             files.AddRange(Directory.GetFiles("bin", "*", SearchOption.AllDirectories));
-            List<string> outfiles = new List<string>();
+            var outfiles = new List<string>();
             foreach(string infile in files)
             {
                 string file = infile.Replace("\\", "/");
-                if(file.EndsWith(".ini") || 
-                    file.EndsWith(".pdb") || 
-                    file.EndsWith(".log") || 
+                if(file.EndsWith(".ini") ||
+                    file.EndsWith(".pdb") ||
+                    file.EndsWith(".log") ||
                     file.EndsWith("SilverSim.Packager.exe") ||
                     file.EndsWith(".vshost.exe") ||
                     file.EndsWith(".vshost.exe.config") ||
@@ -81,13 +79,13 @@ namespace SilverSim.Packager
         }
 
         [SuppressMessage("Gendarme.Rules.Exceptions", "DoNotSwallowErrorsCatchingNonSpecificExceptionsRule")]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Thread.CurrentThread.Name = "SilverSim:Packager";
 
             string[] pkgfiles = Directory.GetFiles(CoreUpdater.Instance.InstalledPackagesPath, "*.spkg");
 
-            Dictionary<string, PackageDescription> packages = new Dictionary<string, PackageDescription>();
+            var packages = new Dictionary<string, PackageDescription>();
 
             Console.WriteLine("Loading package descriptions ...");
             foreach (string pkgfile in pkgfiles)
@@ -149,14 +147,14 @@ namespace SilverSim.Packager
                 return;
             }
 
-            Dictionary<string, string> assemblytopackage = new Dictionary<string, string>();
-            Dictionary<string, List<string>> assembliesreferenced = new Dictionary<string, List<string>>();
+            var assemblytopackage = new Dictionary<string, string>();
+            var assembliesreferenced = new Dictionary<string, List<string>>();
 
             Directory.SetCurrentDirectory(CoreUpdater.Instance.InstallRootPath);
 
             Console.WriteLine("Collecting file list ...");
             List<string> availablefiles = GetFileList();
-            List<string> existingfiles = new List<string>(availablefiles);
+            var existingfiles = new List<string>(availablefiles);
 
             Console.WriteLine("Validating files being used ...");
             bool filecheckfailed = false;
@@ -246,7 +244,7 @@ namespace SilverSim.Packager
                 return;
             }
             Console.WriteLine("Calculating hashes ... ");
-            Dictionary<string, PackageDescriptionBuilder> finalPacks = new Dictionary<string, PackageDescriptionBuilder>();
+            var finalPacks = new Dictionary<string, PackageDescriptionBuilder>();
             foreach(PackageDescription desc in packages.Values)
             {
                 PackageDescriptionBuilder builder = new PackageDescriptionBuilder(desc);
@@ -322,13 +320,13 @@ namespace SilverSim.Packager
             if (File.Exists("versioninject.xml"))
             {
                 Console.WriteLine("Loading versioninject.xml ...");
-                Dictionary<string, string> versions = new Dictionary<string, string>();
+                var versions = new Dictionary<string, string>();
                 List<string> matchversions = new List<string>();
-                Dictionary<string, string> licenses = new Dictionary<string, string>();
-                
-                using (FileStream x = new FileStream("versioninject.xml", FileMode.Open, FileAccess.Read))
+                var licenses = new Dictionary<string, string>();
+
+                using (var x = new FileStream("versioninject.xml", FileMode.Open, FileAccess.Read))
                 {
-                    using (XmlTextReader reader = new XmlTextReader(x))
+                    using (var reader = new XmlTextReader(x))
                     {
                         while (reader.Read())
                         {
@@ -400,8 +398,8 @@ namespace SilverSim.Packager
                                                             {
                                                                 Assembly a = Assembly.LoadFile(Path.GetFullPath(reader.Value));
                                                                 version = a.GetName().Version.ToString();
-                                                                AssemblyCopyrightAttribute copyrightAttr = a.GetCustomAttribute(typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
-                                                                if(null != copyrightAttr)
+                                                                var copyrightAttr = a.GetCustomAttribute(typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
+                                                                if(copyrightAttr != null)
                                                                 {
                                                                     license = copyrightAttr.Copyright;
                                                                 }
@@ -520,12 +518,12 @@ namespace SilverSim.Packager
                 Console.WriteLine("Package {0} => {1}", desc.Name, desc.Version);
             }
 
-            List<string> skippackages = new List<string>();
+            var skippackages = new List<string>();
             if (File.Exists("skippackagelist.xml"))
             {
-                using (FileStream fs = new FileStream("skippackagelist.xml", FileMode.Open, FileAccess.Read))
+                using (var fs = new FileStream("skippackagelist.xml", FileMode.Open, FileAccess.Read))
                 {
-                    using (XmlTextReader reader = new XmlTextReader(fs))
+                    using (var reader = new XmlTextReader(fs))
                     {
                         while (reader.Read())
                         {
@@ -568,9 +566,9 @@ namespace SilverSim.Packager
                 {
                     File.Delete(zipPath);
                 }
-                using (FileStream zipStream = new FileStream(zipPath + ".tmp", FileMode.Create))
+                using (var zipStream = new FileStream(zipPath + ".tmp", FileMode.Create))
                 {
-                    using (ZipArchive archive = new ZipArchive(zipStream, ZipArchiveMode.Create))
+                    using (var archive = new ZipArchive(zipStream, ZipArchiveMode.Create))
                     {
                         foreach(string file in desc.Files.Keys)
                         {
@@ -590,9 +588,9 @@ namespace SilverSim.Packager
                 File.Move(zipPath + ".tmp", zipPath);
 
                 Console.WriteLine("Hasing zip of {0}", desc.Name);
-                using (FileStream zipStream = new FileStream(zipPath, FileMode.Open))
+                using (var zipStream = new FileStream(zipPath, FileMode.Open))
                 {
-                    using (SHA256 sha = SHA256.Create())
+                    using (var sha = SHA256.Create())
                     {
                         sha.ComputeHash(zipStream);
                         desc.Hash = sha.Hash;
@@ -618,12 +616,12 @@ namespace SilverSim.Packager
                 File.Move(targetname + ".tmp", targetname);
             }
 
-            List<string> hidepackages = new List<string>();
+            var hidepackages = new List<string>();
             if(File.Exists("hidepackagelist.xml"))
             {
-                using (FileStream fs = new FileStream("hidepackagelist.xml", FileMode.Open, FileAccess.Read))
+                using (var fs = new FileStream("hidepackagelist.xml", FileMode.Open, FileAccess.Read))
                 {
-                    using (XmlTextReader reader = new XmlTextReader(fs))
+                    using (var reader = new XmlTextReader(fs))
                     {
                         while(reader.Read())
                         {
@@ -649,7 +647,7 @@ namespace SilverSim.Packager
 
             Console.WriteLine("Updating package feed list ...");
             string feedList = "feed/" + interfaceVersion + "/packages.list";
-            using (XmlTextWriter writer = new XmlTextWriter(feedList + ".tmp", new UTF8Encoding(false)))
+            using (var writer = new XmlTextWriter(feedList + ".tmp", new UTF8Encoding(false)))
             {
                 writer.WriteStartElement("packages");
                 foreach (string file in Directory.GetFiles("feed/" + interfaceVersion, "*.spkg", SearchOption.TopDirectoryOnly))
@@ -669,20 +667,13 @@ namespace SilverSim.Packager
             File.Move(feedList + ".tmp", feedList);
         }
 
-        static string PackageUpdateFeedPath(PackageDescription desc)
-        {
-            return string.Format("feed/{0}/{1}.spkg", desc.InterfaceVersion, desc.Name);
-        }
+        private static string PackageUpdateFeedPath(PackageDescription desc) =>
+            string.Format("feed/{0}/{1}.spkg", desc.InterfaceVersion, desc.Name);
 
-        static string PackageSpecificVersionFeedPath(PackageDescription desc)
-        {
-            return string.Format("feed/{0}/{1}/{2}.spkg", desc.InterfaceVersion, desc.Version, desc.Name);
-        }
+        private static string PackageSpecificVersionFeedPath(PackageDescription desc) =>
+            string.Format("feed/{0}/{1}/{2}.spkg", desc.InterfaceVersion, desc.Version, desc.Name);
 
-        static string PackageZipPath(PackageDescription desc)
-        {
-            return string.Format("feed/{0}/{1}/{2}.zip", desc.InterfaceVersion, desc.Version, desc.Name);
-        }
-
+        private static string PackageZipPath(PackageDescription desc) =>
+            string.Format("feed/{0}/{1}/{2}.zip", desc.InterfaceVersion, desc.Version, desc.Name);
     }
 }
