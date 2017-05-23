@@ -78,7 +78,6 @@ namespace SilverSim.Packager
             return outfiles;
         }
 
-        [SuppressMessage("Gendarme.Rules.Exceptions", "DoNotSwallowErrorsCatchingNonSpecificExceptionsRule")]
         private static void Main(string[] args)
         {
             Thread.CurrentThread.Name = "SilverSim:Packager";
