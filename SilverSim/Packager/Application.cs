@@ -462,7 +462,7 @@ namespace SilverSim.Packager
                 bool versionmissing = false;
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    if(!versions.ContainsKey(desc.Name) && desc.Version?.Length == 0)
+                    if(!versions.ContainsKey(desc.Name) && string.IsNullOrEmpty(desc.Version))
                     {
                         Console.WriteLine("Package {0} not in versioninject.xml", desc.Name);
                         versionmissing = true;
@@ -478,7 +478,7 @@ namespace SilverSim.Packager
                 Console.WriteLine("Injecting versions ...");
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    if (desc.Version?.Length == 0)
+                    if (string.IsNullOrEmpty(desc.Version))
                     {
                         desc.Version = versions[desc.Name];
                     }
@@ -501,11 +501,11 @@ namespace SilverSim.Packager
             Console.WriteLine("Checking versions ...");
             foreach (PackageDescriptionBuilder desc in finalPacks.Values)
             {
-                if (desc.Version?.Length == 0)
+                if (string.IsNullOrEmpty(desc.Version))
                 {
                     desc.Version = "0.0.0.0";
                 }
-                if (desc.InterfaceVersion?.Length == 0)
+                if (string.IsNullOrEmpty(desc.InterfaceVersion))
                 {
                     desc.InterfaceVersion = interfaceVersion;
                 }
