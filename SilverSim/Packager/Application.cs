@@ -355,7 +355,7 @@ namespace SilverSim.Packager
                                                             break;
                                                     }
                                                 } while (reader.MoveToNextAttribute());
-                                                if (!string.IsNullOrEmpty(version))
+                                                if (version?.Length != 0)
                                                 {
                                                     foreach(string pkgname in finalPacks.Keys)
                                                     {
@@ -418,7 +418,7 @@ namespace SilverSim.Packager
                                                             PackageDescription actpack = packages[package];
                                                             foreach(PackageDescription.FileInfo fi in actpack.Files.Values)
                                                             {
-                                                                if (!string.IsNullOrEmpty(fi.Version))
+                                                                if (fi.Version?.Length != 0)
                                                                 {
                                                                     version = fi.Version;
                                                                     break;
@@ -431,7 +431,7 @@ namespace SilverSim.Packager
                                                             break;
                                                     }
                                                 } while (reader.MoveToNextAttribute());
-                                                if (!string.IsNullOrEmpty(package) && !string.IsNullOrEmpty(version))
+                                                if (package?.Length != 0 && version?.Length != 0)
                                                 {
                                                     versions[package] = version;
                                                     if (exactmatch)
@@ -439,7 +439,7 @@ namespace SilverSim.Packager
                                                         matchversions.Add(package);
                                                     }
                                                 }
-                                                if(!string.IsNullOrEmpty(package) && !string.IsNullOrEmpty(license))
+                                                if(package?.Length != 0 && license?.Length != 0)
                                                 {
                                                     licenses[package] = license;
                                                 }
@@ -462,7 +462,7 @@ namespace SilverSim.Packager
                 bool versionmissing = false;
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    if(!versions.ContainsKey(desc.Name) && string.IsNullOrEmpty(desc.Version))
+                    if(!versions.ContainsKey(desc.Name) && desc.Version?.Length == 0)
                     {
                         Console.WriteLine("Package {0} not in versioninject.xml", desc.Name);
                         versionmissing = true;
@@ -478,7 +478,7 @@ namespace SilverSim.Packager
                 Console.WriteLine("Injecting versions ...");
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    if (string.IsNullOrEmpty(desc.Version))
+                    if (desc.Version?.Length == 0)
                     {
                         desc.Version = versions[desc.Name];
                     }
@@ -501,11 +501,11 @@ namespace SilverSim.Packager
             Console.WriteLine("Checking versions ...");
             foreach (PackageDescriptionBuilder desc in finalPacks.Values)
             {
-                if (string.IsNullOrEmpty(desc.Version))
+                if (desc.Version?.Length == 0)
                 {
                     desc.Version = "0.0.0.0";
                 }
-                if (string.IsNullOrEmpty(desc.InterfaceVersion))
+                if (desc.InterfaceVersion?.Length == 0)
                 {
                     desc.InterfaceVersion = interfaceVersion;
                 }
