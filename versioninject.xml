@@ -72,6 +72,7 @@
     <package name="SilverSim.Scripting.Lsl.Api.Character" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.Character.dll"/>
     <package name="SilverSim.Scripting.Lsl.Api.DynamicTexture" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.DynamicTexture.dll"/>
     <package name="SilverSim.Scripting.Lsl.Api.Email" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.Email.dll"/>
+    <package name="SilverSim.Scripting.Lsl.Api.Hashtable" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.Hashtable.dll"/>
     <package name="SilverSim.Scripting.Lsl.Api.Money" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.Money.dll"/>
     <package name="SilverSim.Scripting.Lsl.Api.Mpd" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.Mpd.dll"/>
     <package name="SilverSim.Scripting.Lsl.Api.Mqtt" version-src="bin/plugins/SilverSim.Scripting.Lsl.Api.Mqtt.dll"/>
