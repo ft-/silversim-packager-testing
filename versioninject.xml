@@ -112,4 +112,5 @@
     <package name="SilverSim.WebIF" version-src="bin/plugins/SilverSim.WebIF.dll"/>
     <package name="SilverSim.Tests.Viewer" version-src="bin/plugins/SilverSim.Tests.Viewer.dll"/>
     <package name="System.Threading.Tasks.Extensions" version-src="bin/System.Threading.Tasks.Extensions.dll"/>
+    <package name="SilverSim.Tests.Preconditions.MySQL" version-src="bin/plugins/SilverSim.Tests.Precondition.MySQL.dll"/>
 </versioninject>
