@@ -462,7 +462,7 @@ namespace SilverSim.Packager
                 bool versionmissing = false;
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
-                    if(!versions.ContainsKey(desc.Name) && string.IsNullOrEmpty(desc.Version))
+                    if(!versions.ContainsKey(desc.Name) && string.IsNullOrEmpty(desc.Version) && !desc.SkipDelivery)
                     {
                         Console.WriteLine("Package {0} not in versioninject.xml", desc.Name);
                         versionmissing = true;
@@ -478,6 +478,10 @@ namespace SilverSim.Packager
                 Console.WriteLine("Injecting versions ...");
                 foreach(PackageDescriptionBuilder desc in finalPacks.Values)
                 {
+                    if(desc.SkipDelivery)
+                    {
+                        continue;
+                    }
                     if (string.IsNullOrEmpty(desc.Version))
                     {
                         desc.Version = versions[desc.Name];
@@ -501,6 +505,10 @@ namespace SilverSim.Packager
             Console.WriteLine("Checking versions ...");
             foreach (PackageDescriptionBuilder desc in finalPacks.Values)
             {
+                if (desc.SkipDelivery)
+                {
+                    continue;
+                }
                 if (string.IsNullOrEmpty(desc.Version))
                 {
                     desc.Version = "0.0.0.0";
@@ -514,6 +522,10 @@ namespace SilverSim.Packager
             Console.WriteLine("Final package versions ...");
             foreach(PackageDescriptionBuilder desc in finalPacks.Values)
             {
+                if (desc.SkipDelivery)
+                {
+                    continue;
+                }
                 Console.WriteLine("Package {0} => {1}", desc.Name, desc.Version);
             }
 
@@ -549,7 +561,7 @@ namespace SilverSim.Packager
             Console.WriteLine("Building packaged structure ...");
             foreach(PackageDescriptionBuilder desc in finalPacks.Values)
             {
-                if(skippackages.Contains(desc.Name))
+                if(skippackages.Contains(desc.Name) || desc.SkipDelivery)
                 {
                     continue;
                 }
@@ -600,7 +612,7 @@ namespace SilverSim.Packager
             Console.WriteLine("Write package feed ...");
             foreach(PackageDescription desc in finalPacks.Values)
             {
-                if (skippackages.Contains(desc.Name))
+                if (skippackages.Contains(desc.Name) || desc.SkipDelivery)
                 {
                     continue;
                 }
