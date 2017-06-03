@@ -14,6 +14,7 @@
     <package name="CSJ2K" version-src="bin/CSJ2K.dll"/>
     <package name="log4net" version-src="bin/log4net.dll" exactmatch="true"/>
     <package name="MySql.Data" version-src="bin/MySql.Data.dll"/>
+    <package name="Npgsql" version-src="bin/Npgsql.dll"/>
     <package name="Nini" version-src="bin/Nini.dll"/>
     <package name="OpenJp2.Net" version-src="bin/OpenJp2.Net.dll"/>
     <package name="IronRuby" version-src="bin/IronRuby.dll"/>
@@ -36,6 +37,7 @@
     <package name="SilverSim.BackendHandlers.Robust" version-src="bin/plugins/SilverSim.BackendHandlers.Robust.dll"/>
     <package name="SilverSim.Database.Memory" version-src="bin/plugins/SilverSim.Database.Memory.dll"/>
     <package name="SilverSim.Database.MySQL" version-src="bin/plugins/SilverSim.Database.MySQL.dll"/>
+    <package name="SilverSim.Database.PostgreSQL" version-src="bin/plugins/SilverSim.Database.PostgreSQL.dll"/>
     <package name="SilverSim.ExampleConfigs" version="meta"/>
     <package name="SilverSim.Grid" version-src="bin/plugins/SilverSim.Grid.dll"/>
     <package name="SilverSim.Groups.Common" version-src="bin/plugins/SilverSim.Groups.Common.dll"/>
