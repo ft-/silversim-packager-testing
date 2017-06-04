@@ -92,8 +92,6 @@
     <package name="SilverSim.ServiceInterfaces" version-src="bin/SilverSim.ServiceInterfaces.dll"/>
     <package name="SilverSim.SFSWind" version-src="bin/plugins/SilverSim.SFSWind.dll"/>
     <package name="SilverSim.Surabaya" version-src="bin/plugins/SilverSim.SFSWind.dll"/>
-    <package name="SilverSim.Tests.Lsl" version-src="bin/plugins/SilverSim.Tests.Lsl.dll"/>
-    <package name="SilverSim.Tests" version-src="bin/plugins/SilverSim.Tests.dll"/>
     <package name="SilverSim.Threading" version-src="bin/SilverSim.Threading.dll"/>
     <package name="SilverSim.Types" version-src="bin/SilverSim.Types.dll"/>
     <package name="SilverSim.Updater" version-src="bin/SilverSim.Updater.dll"/>
@@ -110,7 +108,5 @@
     <package name="SilverSim.Viewer.Teleport" version-src="bin/plugins/SilverSim.Viewer.Teleport.dll"/>
     <package name="SilverSim.Viewer.TerrainEdit" version-src="bin/plugins/SilverSim.Viewer.TerrainEdit.dll"/>
     <package name="SilverSim.WebIF" version-src="bin/plugins/SilverSim.WebIF.dll"/>
-    <package name="SilverSim.Tests.Viewer" version-src="bin/plugins/SilverSim.Tests.Viewer.dll"/>
     <package name="System.Threading.Tasks.Extensions" version-src="bin/System.Threading.Tasks.Extensions.dll"/>
-    <package name="SilverSim.Tests.Preconditions.MySQL" version-src="bin/plugins/SilverSim.Tests.Precondition.MySQL.dll"/>
 </versioninject>
