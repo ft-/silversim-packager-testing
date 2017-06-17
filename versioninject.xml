@@ -104,6 +104,7 @@
     <package name="SilverSim.Viewer.Groups" version-src="bin/plugins/SilverSim.Viewer.Groups.dll"/>
     <package name="SilverSim.Viewer.Map" version-src="bin/plugins/SilverSim.Viewer.Map.dll"/>
     <package name="SilverSim.Viewer.OfflineIM" version-src="bin/plugins/SilverSim.Viewer.OfflineIM.dll"/>
+    <package name="SilverSim.Viewer.Parcel" version-src="bin/plugins/SilverSim.Viewer.Parcel.dll"/>
     <package name="SilverSim.Viewer.Profile" version-src="bin/plugins/SilverSim.Viewer.Profile.dll"/>
     <package name="SilverSim.Viewer.Search" version-src="bin/plugins/SilverSim.Viewer.Search.dll"/>
     <package name="SilverSim.Viewer.Teleport" version-src="bin/plugins/SilverSim.Viewer.Teleport.dll"/>
