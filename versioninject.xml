@@ -24,6 +24,7 @@
     <package name="SilverSim.SharpNav" version-src="bin/plugins/SilverSim.SharpNav.dll"/>
     <package name="Microsoft.Scripting" version-src="bin/Microsoft.Scripting.dll"/>
     <package name="Paloma.TargaImage" version-src="bin/Paloma.TargaImage.dll"/>
+    <package name="SilverSim.AssetPurger" version-src="bin/plugins/SilverSim.AssetPurger.dll"/>
     <package name="SilverSim.Backend.Common" version-src="bin/plugins/SilverSim.Backend.Common.dll"/>
     <package name="SilverSim.Backend.OpenSim.Neighbor" version-src="bin/plugins/SilverSim.Backend.OpenSim.Neighbor.dll"/>
     <package name="SilverSim.BackendConnectors.Ambergrove" version-src="bin/plugins/SilverSim.BackendConnectors.Ambergrove.dll"/>
@@ -34,7 +35,7 @@
     <package name="SilverSim.BackendConnectors.Simian" version-src="bin/plugins/SilverSim.BackendConnectors.Simian.dll"/>
     <package name="SilverSim.BackendHandlers.Ambergrove" version-src="bin/plugins/SilverSim.BackendHandlers.Ambergrove.dll"/>
     <package name="SilverSim.BackendHandlers.Robust.Simulation" version-src="bin/plugins/SilverSim.BackendHandlers.Robust.Simulation.dll"/>
-	<package name="SilverSim.BackendHandlers.Robust.Grid" version-src="bin/plugins/SilverSim.BackendHandlers.Robust.Grid.dll"/>
+    <package name="SilverSim.BackendHandlers.Robust.Grid" version-src="bin/plugins/SilverSim.BackendHandlers.Robust.Grid.dll"/>
     <package name="SilverSim.BackendHandlers.Robust" version-src="bin/plugins/SilverSim.BackendHandlers.Robust.dll"/>
     <package name="SilverSim.Database.Memory" version-src="bin/plugins/SilverSim.Database.Memory.dll"/>
     <package name="SilverSim.Database.MySQL" version-src="bin/plugins/SilverSim.Database.MySQL.dll"/>
