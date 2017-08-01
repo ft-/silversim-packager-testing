@@ -58,6 +58,7 @@
     <package name="SilverSim.Main.GUI" version-src="bin/SilverSim.Main.GUI.exe"/>
     <package name="SilverSim.OpenSimArchiver" version-src="bin/plugins/SilverSim.OpenSimArchiver.dll"/>
     <package name="SilverSim.Scene.Agent" version-src="bin/SilverSim.Scene.Agent.dll"/>
+    <package name="SilverSim.Scene.Agent.Bakery" version-src="bin/SilverSim.Scene.Agent.Bakery.dll"/>
     <package name="SilverSim.Scene.Chat" version-src="bin/plugins/SilverSim.Scene.Chat.dll"/>
     <package name="SilverSim.Scene.Implementation.Basic" version-src="bin/plugins/SilverSim.Scene.Implementation.Basic.dll"/>
     <package name="SilverSim.Scene.Management" version-src="bin/SilverSim.Scene.Management.dll"/>
