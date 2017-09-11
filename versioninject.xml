@@ -61,6 +61,7 @@
     <package name="SilverSim.Scene.Agent.Bakery" version-src="bin/SilverSim.Scene.Agent.Bakery.dll"/>
     <package name="SilverSim.Scene.Chat" version-src="bin/plugins/SilverSim.Scene.Chat.dll"/>
     <package name="SilverSim.Scene.Implementation.Basic" version-src="bin/plugins/SilverSim.Scene.Implementation.Basic.dll"/>
+    <package name="SilverSim.Scene.Implementation.Common" version-src="bin/SilverSim.Scene.Implementation.Common.dll"/>
     <package name="SilverSim.Scene.Management" version-src="bin/SilverSim.Scene.Management.dll"/>
     <package name="SilverSim.Scene.Npc" version-src="bin/plugins/SilverSim.Scene.Npc.dll"/>
     <package name="SilverSim.Scene.Physics.Bullet" version-src="bin/plugins/SilverSim.Scene.Physics.Bullet.dll"/>
