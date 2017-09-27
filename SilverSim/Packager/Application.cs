@@ -67,6 +67,7 @@ namespace SilverSim.Packager
                     file.EndsWith(".a") ||
                     file.EndsWith(".p12") ||
                     file.EndsWith(".spkg") ||
+                    file.EndsWith(".db") ||
                     file.StartsWith(".") ||
                     file.Contains("/.") ||
                     file.EndsWith(".build"))
@@ -293,7 +294,9 @@ namespace SilverSim.Packager
             }
 
             Console.WriteLine("Collecting file version ...");
-            foreach(PackageDescriptionBuilder desc in finalPacks.Values)
+            var versions = new Dictionary<string, string>();
+            var licenses = new Dictionary<string, string>();
+            foreach (PackageDescriptionBuilder desc in finalPacks.Values)
             {
                 foreach(string filename in new List<string>(desc.Files.Keys))
                 {
@@ -302,9 +305,19 @@ namespace SilverSim.Packager
                         PackageDescription.FileInfo fi = desc.Files[filename];
                         try
                         {
-                            fi.Version = Assembly.LoadFile(Path.GetFullPath(filename)).GetName().Version.ToString();
+                            Assembly a = Assembly.LoadFile(Path.GetFullPath(filename));
+                            fi.Version = a.GetName().Version.ToString();
                             desc.Files[filename] = fi;
                             Console.WriteLine("Appended version {0} to {1}", fi.Version, filename);
+                            if (fi.IsVersionSource)
+                            {
+                                versions[desc.Name] = fi.Version;
+                                var copyrightAttr = a.GetCustomAttribute(typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
+                                if (copyrightAttr != null)
+                                {
+                                    licenses[desc.Name] = copyrightAttr.Copyright;
+                                }
+                            }
                         }
                         catch
                         {
@@ -319,9 +332,7 @@ namespace SilverSim.Packager
             if (File.Exists("versioninject.xml"))
             {
                 Console.WriteLine("Loading versioninject.xml ...");
-                var versions = new Dictionary<string, string>();
-                List<string> matchversions = new List<string>();
-                var licenses = new Dictionary<string, string>();
+                var matchversions = new List<string>();
 
                 using (var x = new FileStream("versioninject.xml", FileMode.Open, FileAccess.Read))
                 {
