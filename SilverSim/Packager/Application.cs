@@ -335,7 +335,11 @@ namespace SilverSim.Packager
 
                 using (var x = new FileStream("versioninject.xml", FileMode.Open, FileAccess.Read))
                 {
-                    using (var reader = new XmlTextReader(x))
+                    using (var reader = new XmlTextReader(x)
+                    {
+                        DtdProcessing = DtdProcessing.Ignore,
+                        XmlResolver = null
+                    })
                     {
                         while (reader.Read())
                         {
@@ -345,7 +349,7 @@ namespace SilverSim.Packager
                                     switch (reader.Name)
                                     {
                                         case "interface-version":
-                                            if(reader.IsEmptyElement)
+                                            if (reader.IsEmptyElement)
                                             {
                                                 break;
                                             }
@@ -367,9 +371,9 @@ namespace SilverSim.Packager
                                                 } while (reader.MoveToNextAttribute());
                                                 if (version?.Length != 0)
                                                 {
-                                                    foreach(string pkgname in finalPacks.Keys)
+                                                    foreach (string pkgname in finalPacks.Keys)
                                                     {
-                                                        if(versions.ContainsKey(pkgname))
+                                                        if (versions.ContainsKey(pkgname))
                                                         {
                                                             continue;
                                                         }
@@ -408,7 +412,7 @@ namespace SilverSim.Packager
                                                                 Assembly a = Assembly.LoadFile(Path.GetFullPath(reader.Value));
                                                                 version = a.GetName().Version.ToString();
                                                                 var copyrightAttr = a.GetCustomAttribute(typeof(AssemblyCopyrightAttribute)) as AssemblyCopyrightAttribute;
-                                                                if(copyrightAttr != null)
+                                                                if (copyrightAttr != null)
                                                                 {
                                                                     license = copyrightAttr.Copyright;
                                                                 }
@@ -426,7 +430,7 @@ namespace SilverSim.Packager
 
                                                         case "version-from-package-files":
                                                             PackageDescription actpack = packages[package];
-                                                            foreach(PackageDescription.FileInfo fi in actpack.Files.Values)
+                                                            foreach (PackageDescription.FileInfo fi in actpack.Files.Values)
                                                             {
                                                                 if (fi.Version?.Length != 0)
                                                                 {
@@ -449,7 +453,7 @@ namespace SilverSim.Packager
                                                         matchversions.Add(package);
                                                     }
                                                 }
-                                                if(package?.Length != 0 && license?.Length != 0)
+                                                if (package?.Length != 0 && license?.Length != 0)
                                                 {
                                                     licenses[package] = license;
                                                 }
@@ -544,7 +548,11 @@ namespace SilverSim.Packager
             {
                 using (var fs = new FileStream("skippackagelist.xml", FileMode.Open, FileAccess.Read))
                 {
-                    using (var reader = new XmlTextReader(fs))
+                    using (var reader = new XmlTextReader(fs)
+                    {
+                        DtdProcessing = DtdProcessing.Ignore,
+                        XmlResolver = null
+                    })
                     {
                         while (reader.Read())
                         {
@@ -642,11 +650,15 @@ namespace SilverSim.Packager
             {
                 using (var fs = new FileStream("hidepackagelist.xml", FileMode.Open, FileAccess.Read))
                 {
-                    using (var reader = new XmlTextReader(fs))
+                    using (var reader = new XmlTextReader(fs)
                     {
-                        while(reader.Read())
+                        DtdProcessing = DtdProcessing.Ignore,
+                        XmlResolver = null
+                    })
+                    {
+                        while (reader.Read())
                         {
-                            if(reader.NodeType == XmlNodeType.Element && reader.Name == "package")
+                            if (reader.NodeType == XmlNodeType.Element && reader.Name == "package")
                             {
                                 if (reader.MoveToFirstAttribute())
                                 {
