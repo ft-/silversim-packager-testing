@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Project frameworkVersion="v4_5" name="SilverSim.Packager" path="SilverSim/Packager" type="Exe">
+<Project frameworkVersion="v4_5_2" name="SilverSim.Packager" path="SilverSim/Packager" type="Exe">
   <Configuration name="Release">
     <Options>
       <CompilerDefines>NO_SILVERSIM_TYPES</CompilerDefines>
@@ -19,15 +19,15 @@
     </Options>
   </Configuration>
   <ReferencePath>../../bin</ReferencePath>
-  <Reference name="System"/>
-  <Reference name="System.IO.Compression"/>
-  <Reference name="System.Xml"/>
-  <Reference name="SilverSim.Updater" localCopy="false"/>
+  <Reference name="System" />
+  <Reference name="System.IO.Compression" />
+  <Reference name="System.Xml" />
+  <Reference name="SilverSim.Updater" localCopy="false" />
   <Files>
     <Match pattern="*.cs" recurse="true">
-      <Exclude pattern="TemporaryGeneratedFile"/>
+      <Exclude pattern="TemporaryGeneratedFile" />
     </Match>
-    <Match pattern="ProductAssemblyInfo.cs" path=".." recurse="false"/>
-    <Match pattern="Prebuild.xml" recurse="false" buildAction="None"/>
+    <Match pattern="ProductAssemblyInfo.cs" path=".." recurse="false" />
+    <Match pattern="Prebuild.xml" recurse="false" buildAction="None" />
   </Files>
 </Project>
