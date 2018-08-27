@@ -616,7 +616,7 @@ namespace SilverSim.Packager
                 File.Delete(zipPath);
                 File.Move(zipPath + ".tmp", zipPath);
 
-                Console.WriteLine("Hasing zip of {0}", desc.Name);
+                Console.WriteLine("Hashing zip of {0}", desc.Name);
                 using (var zipStream = new FileStream(zipPath, FileMode.Open))
                 {
                     using (var sha = SHA256.Create())
